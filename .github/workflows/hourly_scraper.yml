@@ -2,8 +2,8 @@ name: Run Hourly Scraper
 
 on:
   schedule:
-    - cron: '0 * * * *'  # This runs at the start of every hour
-  workflow_dispatch:      # This allows you to run it manually to test
+    - cron: '0 0-7,14-23 * * *'
+  workflow_dispatch:     # This allows you to run it manually to test
 
 permissions:
   contents: write         # Allows the Action to push the JSON file back to your repo
