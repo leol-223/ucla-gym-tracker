@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from datetime import datetime
 import time
 
 def get_live_activity_vals(url):
@@ -21,7 +22,18 @@ def get_live_activity_vals(url):
     children = chart_div.find_elements(By.XPATH, "./*")
 
     vals = []
+    date0 = None
     for child in children:
+        full_text = child.text
+
+        if date0 is None:
+            # Split the text by lines and look for the one starting with "Updated"
+            lines = full_text.split('\n')
+            updated_text = next((line.strip() for line in lines if "Updated:" in line), None)
+
+            dt = updated_text.split("Updated: ")[1]
+            date_obj = datetime.strptime(dt, "%m/%d/%Y %I:%M %p")
+            date0 = date_obj
         vals.append(float(child.find_element(By.TAG_NAME, "div").get_attribute("data-value"))/100)
     driver.quit()
-    return vals
+    return vals, date0

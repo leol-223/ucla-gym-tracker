@@ -15,8 +15,14 @@ def get_business(elements, vals):
         bs.append(b)
     return bs
 
-w_vals = get_live_activity_vals(wooden_url)
-b_vals = get_live_activity_vals(bfit_url)
+w_vals, dw = get_live_activity_vals(wooden_url)
+b_vals, db = get_live_activity_vals(bfit_url)
 
-print(get_business(wppl, w_vals))
-print(get_business(bppl, b_vals))
+def print_ppl_activity(vals):
+    for i, name in enumerate(["Push", "Pull", "Legs"]):
+        print(f"{name}: {vals[i]*100:.1f}%")
+
+print(f"Wooden center (Updated {str(dw)}):")
+print_ppl_activity(get_business(wppl, w_vals))
+print(f"\nBfit: (Updated {str(db)})")
+print_ppl_activity(get_business(bppl, b_vals))
