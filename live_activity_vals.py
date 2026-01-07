@@ -3,10 +3,17 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from datetime import datetime
+from selenium.webdriver.chrome.options import Options
+
 import time
 
 def get_live_activity_vals(url):
-    driver = webdriver.Chrome()
+    chrome_options = Options()
+    chrome_options.add_argument("--headless=new") # For Chrome 109+
+    chrome_options.add_argument("--disable-gpu") # Recommended for certain environments
+    chrome_options.add_argument("--window-size=1920,1080") # Set a default window size
+
+    driver = webdriver.Chrome(options=chrome_options)
 
     driver.get(url)
 

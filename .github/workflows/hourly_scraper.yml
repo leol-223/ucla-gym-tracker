@@ -26,7 +26,7 @@ jobs:
           # if you have a requirements.txt, use: pip install -r requirements.txt
 
       - name: Run Scraper
-        run: python your_script.py  # Change this to your actual filename
+        run: python run_hourly.py  # Change this to your actual filename
 
       - name: Commit and Push changes
         run: |
