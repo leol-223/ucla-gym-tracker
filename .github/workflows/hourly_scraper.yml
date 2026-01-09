@@ -2,7 +2,7 @@ name: Run Hourly Scraper
 
 on:
   schedule:
-    - cron: '0 0-7,14-23 * * *'
+    - cron: '23 0-8,14-23 * * *'
   workflow_dispatch:     # This allows you to run it manually to test
 
 permissions:
