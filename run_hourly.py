@@ -29,11 +29,10 @@ if os.path.exists("data.json"):
         existing_bfit = data['bfit']
         existing_wooden = data['wooden']
 
-existing_bfit[dw.isoformat()] = w_vals
-existing_wooden[db.isoformat()] = b_vals
+existing_bfit[db.isoformat()] = b_vals
+existing_wooden[dw.isoformat()] = w_vals
 with open('data.json', 'w') as f:
     data = {}
     data['bfit'] = existing_bfit
     data['wooden'] = existing_wooden
-    print("data", data)
     json.dump(data, f)
