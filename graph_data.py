@@ -51,12 +51,13 @@ for dw in existing_data:
 # print(f"\nBfit: (Updated {str(db)})")
 # print_ppl_activity(get_business(bppl, b_vals))
 print('Num data points:', len(activities))
-buckets_push = {i: [] for i in range(5, 24)}
+buckets_push_orig = {i: [] for i in range(5, 24)}
 
 for i, d in enumerate(dates):
-    buckets_push[d.hour].append(activities[i])
+    buckets_push_orig[d.hour].append(activities[i])
 
-for k, v in buckets_push.items():
+buckets_push = {i: 0 for i in range(5, 24)}
+for k, v in buckets_push_orig.items():
     if len(v) == 0:
         buckets_push[k] = 0
     else:
@@ -82,14 +83,14 @@ bars = ax.bar(keys_formatted, values, color=bar_color, width=0.75, edgecolor=Non
 
 # 4. Add data labels on top 
 # Increased font size and used a slightly offset color for readability
-labels = [f'{v*100:.1f}%' if v > 0 else '' for v in values]
+labels = [f'{sum(v)/len(v)*100:.1f}% ({len(v)})' if len(v) > 0 else '' for v in list(buckets_push_orig.values())]
 ax.bar_label(bars, labels=labels, padding=5, fontsize=10, fontweight='600', color='#2c3e50')
 
 # 5. Make the Y-axis show percentages too (Consistency is key!)
 ax.set_yticklabels(['{:,.0%}'.format(x) for x in ax.get_yticks()])
 
 # 6. Aesthetic Clean-up
-ax.set_title(f'Wooden Activity Level: {routine}', fontsize=18, pad=25, fontweight='bold', color='#1a1a1a')
+ax.set_title(f'{GYM} Activity: {routine}', fontsize=18, pad=25, fontweight='bold', color='#1a1a1a')
 ax.set_xlabel('Time of Day', fontsize=13, labelpad=15, fontweight='500')
 ax.set_ylabel('Activity', fontsize=13, labelpad=15, fontweight='500')
 
